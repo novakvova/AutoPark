@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+п»їusing Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebAutoPark.Data;
 using WebAutoPark.Data.Entities;
@@ -40,7 +40,7 @@ using (var scope = app.Services.CreateScope())
 
     if (dbContext.Roles.Count() == 0)
     {
-        string[] roles = { "Менеджер", "Механік", "Диспетчер" };
+        string[] roles = { "РњРµРЅРµРґР¶РµСЂ", "РњРµС…Р°РЅС–Рє", "Р”РёСЃРїРµС‚С‡РµСЂ" };
         foreach(var name in roles)
         {
             var role = new RoleEntity
@@ -57,24 +57,24 @@ using (var scope = app.Services.CreateScope())
         UserEntity[] users = {
             new UserEntity
             {
-                FirstName = "Іван",
-                LastName = "Петренко",
+                FirstName = "Р†РІР°РЅ",
+                LastName = "РџРµС‚СЂРµРЅРєРѕ",
                 Username = "admin",
                 Password = "admin123",
                 RoleId = 1
             },
             new UserEntity
             {
-                FirstName = "Богдан",
-                LastName = "Денисенко",
+                FirstName = "Р‘РѕРіРґР°РЅ",
+                LastName = "Р”РµРЅРёСЃРµРЅРєРѕ",
                 Username = "mechanic",
                 Password = "mechanic123",
                 RoleId = 2
             },
             new UserEntity
             {
-                FirstName = "Віктор",
-                LastName = "Денисюк",
+                FirstName = "Р’С–РєС‚РѕСЂ",
+                LastName = "Р”РµРЅРёСЃСЋРє",
                 Username = "dispatcher",
                 Password = "dispatcher123",
                 RoleId = 3
