@@ -225,6 +225,63 @@ using (var scope = app.Services.CreateScope())
         dbContext.SaveChanges();
     }
 
+    if (!dbContext.Routes.Any())
+    {
+        var routes = new List<RouteEntity>
+        {
+            new ()
+            {
+                StartLocation = "Київ",
+                EndLocation = "Львів",
+                DistanceKm = 540
+            },
+            new ()
+            {
+                StartLocation = "Одеса",
+                EndLocation = "Харків",
+                DistanceKm = 720
+            },
+            new ()
+            {
+                StartLocation = "Дніпро",
+                EndLocation = "Запоріжжя",
+                DistanceKm = 85
+            },
+            new ()
+            {
+                StartLocation = "Луцьк",
+                EndLocation = "Рівне",
+                DistanceKm = 70
+            },
+            new ()
+            {
+                StartLocation = "Ужгород",
+                EndLocation = "Івано-Франківськ",
+                DistanceKm = 260
+            },
+            new ()
+            {
+                StartLocation = "Кропивницький",
+                EndLocation = "Миколаїв",
+                DistanceKm = 210
+            },
+            new ()
+            {
+                StartLocation = "Херсон",
+                EndLocation = "Запоріжжя",
+                DistanceKm = 230
+            },
+            new ()
+            {
+                StartLocation = "Чернівці",
+                EndLocation = "Київ",
+                DistanceKm = 525
+            }
+        };
+
+        dbContext.Routes.AddRange(routes);
+        dbContext.SaveChanges();
+    }
 }
 
 
