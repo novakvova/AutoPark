@@ -18,6 +18,7 @@ namespace WebAutoPark.Data
         public DbSet<DriverEntity> Drivers { get; set; }
         public DbSet<RouteEntity> Routes { get; set; }
         public DbSet<AssignmentEntity> Assignments { get; set; }
+        public DbSet<MaintenanceEntity> Maintenances { get; set; }
 
     }
 }

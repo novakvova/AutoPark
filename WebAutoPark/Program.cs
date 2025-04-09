@@ -338,6 +338,53 @@ using (var scope = app.Services.CreateScope())
         dbContext.SaveChanges();
     }
 
+    if (!dbContext.Maintenances.Any())
+    {
+        var vehicles = dbContext.Vehicles.ToList();
+
+        var maintenances = new List<MaintenanceEntity>
+        {
+            new ()
+            {
+                VehicleId = vehicles[0].Id,
+                Description = "Планова заміна мастила та фільтрів",
+                Date = DateTime.Today.AddDays(-90),
+                Cost = 2500
+            },
+            new ()
+            {
+                VehicleId = vehicles[1].Id,
+                Description = "Заміна гальмівних колодок",
+                Date = DateTime.Today.AddDays(-60),
+                Cost = 1800
+            },
+            new ()
+            {
+                VehicleId = vehicles[2].Id,
+                Description = "Діагностика електросистеми",
+                Date = DateTime.Today.AddDays(-30),
+                Cost = 900
+            },
+            new ()
+            {
+                VehicleId = vehicles[3].Id,
+                Description = "Ремонт ходової частини",
+                Date = DateTime.Today.AddDays(-15),
+                Cost = 3400
+            },
+            new ()
+            {
+                VehicleId = vehicles[4].Id,
+                Description = "ТО перед рейсом",
+                Date = DateTime.Today.AddDays(-5),
+                Cost = 1200
+            }
+        };
+
+        dbContext.Maintenances.AddRange(maintenances);
+        dbContext.SaveChanges();
+    }
+
 }
 
 
