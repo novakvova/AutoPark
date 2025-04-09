@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using WebAutoPark.Data;
 using WebAutoPark.Data.Entities;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +85,26 @@ using (var scope = app.Services.CreateScope())
         dbContext.SaveChanges();
     }
 
+
+    if(!dbContext.Companies.Any())
+    {
+        var companies = new List<CompanyEntity>
+        {
+            new () { Name = "ТОВ \"АвтоСвіт\"" },
+            new () { Name = "ПП \"Транспортні Лінії\"" },
+            new () { Name = "ТОВ \"Експрес Логістика\"" },
+            new () { Name = "ПП \"Швидке Таксі\"" },
+            new () { Name = "ТОВ \"Доставка Плюс\"" },
+            new () { Name = "ТОВ \"Автопарк Захід\"" },
+            new () { Name = "ПП \"Міські Перевезення\"" },
+            new () { Name = "ТОВ \"Глобал Транс\"" },
+            new () { Name = "ПП \"Сервіс-Авто\"" },
+            new () { Name = "ТОВ \"Українські Дороги\"" }
+        };
+
+        dbContext.Companies.AddRange(companies);
+        dbContext.SaveChanges();
+    }
 }
 
 
