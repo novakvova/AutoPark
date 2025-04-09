@@ -282,6 +282,62 @@ using (var scope = app.Services.CreateScope())
         dbContext.Routes.AddRange(routes);
         dbContext.SaveChanges();
     }
+
+    if (!dbContext.Assignments.Any())
+    {
+        var vehicles = dbContext.Vehicles.ToList();
+        var drivers = dbContext.Drivers.ToList();
+        var routes = dbContext.Routes.ToList();
+
+        // Проста логіка: перші 5 Assignment, з різними комбінаціями
+        var assignments = new List<AssignmentEntity>
+        {
+            new ()
+            {
+                VehicleId = vehicles[0].Id,
+                DriverId = drivers[0].Id,
+                RouteId = routes[0].Id,
+                AssignedAt = DateTime.Today.AddDays(-5),
+                CompletedAt = DateTime.Today.AddDays(-4)
+            },
+            new ()
+            {
+                VehicleId = vehicles[1].Id,
+                DriverId = drivers[1].Id,
+                RouteId = routes[1].Id,
+                AssignedAt = DateTime.Today.AddDays(-3),
+                CompletedAt = DateTime.Today.AddDays(-2)
+            },
+            new ()
+            {
+                VehicleId = vehicles[2].Id,
+                DriverId = drivers[2].Id,
+                RouteId = routes[2].Id,
+                AssignedAt = DateTime.Today.AddDays(-2),
+                CompletedAt = DateTime.Today.AddDays(-1)
+            },
+            new ()
+            {
+                VehicleId = vehicles[3].Id,
+                DriverId = drivers[3].Id,
+                RouteId = routes[3].Id,
+                AssignedAt = DateTime.Today.AddDays(-1),
+                CompletedAt = null // ще не завершено
+            },
+            new ()
+            {
+                VehicleId = vehicles[4].Id,
+                DriverId = drivers[4].Id,
+                RouteId = routes[4].Id,
+                AssignedAt = DateTime.Today,
+                CompletedAt = null // активне призначення
+            }
+        };
+
+        dbContext.Assignments.AddRange(assignments);
+        dbContext.SaveChanges();
+    }
+
 }
 
 
