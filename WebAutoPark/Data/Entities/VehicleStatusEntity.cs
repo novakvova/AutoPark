@@ -13,5 +13,7 @@ namespace WebAutoPark.Data.Entities
         public int Id { get; set; }
         [Required, StringLength(256)]
         public string Name { get; set; } = string.Empty;
+
+        public ICollection<VehicleEntity> Vehicles { get; set; } = new List<VehicleEntity>();
     }
 }
