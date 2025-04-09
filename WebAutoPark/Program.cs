@@ -105,6 +105,21 @@ using (var scope = app.Services.CreateScope())
         dbContext.Companies.AddRange(companies);
         dbContext.SaveChanges();
     }
+
+    if (!dbContext.VehicleStatuses.Any())
+    {
+        var statuses = new List<VehicleStatusEntity>
+            {
+                new () { Name = "Доступний" },
+                new () { Name = "У використанні" },
+                new () { Name = "На техобслуговуванні" },
+                new () { Name = "Не придатний до експлуатації" }
+            };
+
+        dbContext.VehicleStatuses.AddRange(statuses);
+        dbContext.SaveChanges();
+    }
+
 }
 
 

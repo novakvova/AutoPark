@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAutoPark.Data;
 
@@ -10,9 +11,11 @@ using WebAutoPark.Data;
 namespace WebAutoPark.Migrations
 {
     [DbContext(typeof(AppAutoParkContext))]
-    partial class AppAutoParkContextModelSnapshot : ModelSnapshot
+    [Migration("20250409142735_AddtblVehicleStatuses")]
+    partial class AddtblVehicleStatuses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
