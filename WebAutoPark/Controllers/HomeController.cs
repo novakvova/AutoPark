@@ -1,21 +1,54 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebAutoPark.Data;
+using WebAutoPark.Data.Entities;
 using WebAutoPark.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WebAutoPark.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppAutoParkContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AppAutoParkContext context, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            var list = _context.Companies.ToList(); 
+            return View(list);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
             return View();
+        }
+
+        [HttpPost] //çáåð³ãàº äàí³ â³ä êîðèñòóâà÷à
+        public async Task<IActionResult> Create(CompanyEntity model)
+        {
+            await _context.AddAsync(model);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var item = await _context.Companies.SingleOrDefaultAsync(x => x.Id == id);
+            if (item != null)
+            {
+                _context.Companies.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Privacy()
