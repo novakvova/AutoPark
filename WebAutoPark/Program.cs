@@ -90,16 +90,16 @@ using (var scope = app.Services.CreateScope())
     {
         var companies = new List<CompanyEntity>
         {
-            new () { Name = "ТОВ \"АвтоСвіт\"" },
-            new () { Name = "ПП \"Транспортні Лінії\"" },
-            new () { Name = "ТОВ \"Експрес Логістика\"" },
-            new () { Name = "ПП \"Швидке Таксі\"" },
-            new () { Name = "ТОВ \"Доставка Плюс\"" },
-            new () { Name = "ТОВ \"Автопарк Захід\"" },
-            new () { Name = "ПП \"Міські Перевезення\"" },
-            new () { Name = "ТОВ \"Глобал Транс\"" },
-            new () { Name = "ПП \"Сервіс-Авто\"" },
-            new () { Name = "ТОВ \"Українські Дороги\"" }
+            new CompanyEntity() { Name = "ТОВ \"АвтоСвіт\"" },
+            new CompanyEntity() { Name = "ПП \"Транспортні Лінії\"" },
+            new CompanyEntity() { Name = "ТОВ \"Експрес Логістика\"" },
+            new CompanyEntity() { Name = "ПП \"Швидке Таксі\"" },
+            new CompanyEntity() { Name = "ТОВ \"Доставка Плюс\"" },
+            new CompanyEntity() { Name = "ТОВ \"Автопарк Захід\"" },
+            new CompanyEntity() { Name = "ПП \"Міські Перевезення\"" },
+            new CompanyEntity() { Name = "ТОВ \"Глобал Транс\"" },
+            new CompanyEntity() { Name = "ПП \"Сервіс-Авто\"" },
+            new CompanyEntity() { Name = "ТОВ \"Українські Дороги\"" }
         };
 
         dbContext.Companies.AddRange(companies);
@@ -120,14 +120,19 @@ using (var scope = app.Services.CreateScope())
         dbContext.SaveChanges();
     }
 
+    
     if (!dbContext.Vehicles.Any())
     {
-        var companies = dbContext.Companies.ToList();
-        var statuses = dbContext.VehicleStatuses.ToList();
+        var companies = dbContext.Companies
+            .Where(x => x.Name != "")
+            .ToList();
+        var statuses = dbContext.VehicleStatuses
+            .Where(x => x.Name != "")
+            .ToList();
 
         var vehicles = new List<VehicleEntity>
         {
-            new ()
+            new VehicleEntity()
             {
                 RegistrationNumber = "АА1234ВО",
                 Brand = "Renault",
@@ -136,7 +141,7 @@ using (var scope = app.Services.CreateScope())
                 StatusId = statuses.First(s => s.Name == "Доступний").Id,
                 CompanyId = companies[0].Id
             },
-            new ()
+            new VehicleEntity()
             {
                 RegistrationNumber = "ВС5678НР",
                 Brand = "Mercedes-Benz",
@@ -145,7 +150,7 @@ using (var scope = app.Services.CreateScope())
                 StatusId = statuses.First(s => s.Name == "У використанні").Id,
                 CompanyId = companies[1].Id
             },
-            new ()
+            new VehicleEntity()
             {
                 RegistrationNumber = "КА9988КК",
                 Brand = "Ford",
@@ -154,7 +159,7 @@ using (var scope = app.Services.CreateScope())
                 StatusId = statuses.First(s => s.Name == "На техобслуговуванні").Id,
                 CompanyId = companies[2].Id
             },
-            new ()
+            new VehicleEntity()
             {
                 RegistrationNumber = "АН1111СІ",
                 Brand = "Volkswagen",
@@ -163,7 +168,7 @@ using (var scope = app.Services.CreateScope())
                 StatusId = statuses.First(s => s.Name == "Не придатний до експлуатації").Id,
                 CompanyId = companies[3].Id
             },
-            new ()
+            new VehicleEntity()
             {
                 RegistrationNumber = "ІК3456ТР",
                 Brand = "Peugeot",
@@ -177,7 +182,7 @@ using (var scope = app.Services.CreateScope())
         dbContext.Vehicles.AddRange(vehicles);
         dbContext.SaveChanges();
     }
-
+    
     if (!dbContext.Drivers.Any())
     {
         var companies = dbContext.Companies.ToList();
@@ -224,6 +229,8 @@ using (var scope = app.Services.CreateScope())
         dbContext.Drivers.AddRange(drivers);
         dbContext.SaveChanges();
     }
+
+    
 
     if (!dbContext.Routes.Any())
     {
@@ -384,6 +391,7 @@ using (var scope = app.Services.CreateScope())
         dbContext.Maintenances.AddRange(maintenances);
         dbContext.SaveChanges();
     }
+    
 
 }
 

@@ -13,7 +13,7 @@ namespace WebAutoPark.Data.Entities
         public int Id { get; set; }
         [ForeignKey("Vehicle")]
         public int VehicleId { get; set; }
-        public VehicleEntity Vehicle { get; set; } = new VehicleEntity();
+        public VehicleEntity Vehicle { get; set; }
 
         public DateTime Date { get; set; }
         public string Description { get; set; } = String.Empty;

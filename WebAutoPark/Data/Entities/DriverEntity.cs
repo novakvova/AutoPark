@@ -16,6 +16,6 @@ namespace WebAutoPark.Data.Entities
 
         [ForeignKey("Company")]
         public int CompanyId { get; set; }
-        public CompanyEntity Company { get; set; } = new CompanyEntity();
+        public CompanyEntity Company { get; set; }
     }
 }

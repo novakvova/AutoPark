@@ -5,18 +5,20 @@ using WebAutoPark.Data.Entities;
 
 namespace WebAutoPark.Controllers;
 
-public class VehicleStatusesController : Controller
+public class VehiclesController : Controller
 {
     private readonly AppAutoParkContext _context;
 
-    public VehicleStatusesController(AppAutoParkContext context)
+    public VehiclesController(AppAutoParkContext context)
     {
         _context = context;
     }
 
     public IActionResult Index()
     {
-        var list = _context.VehicleStatuses
+        var list = _context.Vehicles
+            .Include(x => x.Company)
+            .Include(x => x.Status)
             .ToList(); 
         return View(list);
     }
@@ -28,7 +30,7 @@ public class VehicleStatusesController : Controller
     }
 
     [HttpPost] 
-    public async Task<IActionResult> Create(VehicleStatusEntity model)
+    public async Task<IActionResult> Create(VehicleEntity model)
     {
         await _context.AddAsync(model);
         await _context.SaveChangesAsync();
@@ -38,10 +40,10 @@ public class VehicleStatusesController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
-        var item = await _context.VehicleStatuses.SingleOrDefaultAsync(x => x.Id == id);
+        var item = await _context.Vehicles.SingleOrDefaultAsync(x => x.Id == id);
         if (item != null)
         {
-            _context.VehicleStatuses.Remove(item);
+            _context.Vehicles.Remove(item);
             await _context.SaveChangesAsync();
         }
         return RedirectToAction(nameof(Index));

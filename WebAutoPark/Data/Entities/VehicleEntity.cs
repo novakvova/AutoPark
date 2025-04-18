@@ -20,10 +20,10 @@ namespace WebAutoPark.Data.Entities
 
         [ForeignKey("Status")]
         public int StatusId { get; set; }
-        public VehicleStatusEntity Status { get; set; } = new VehicleStatusEntity();
+        public VehicleStatusEntity Status { get; set; }
 
         [ForeignKey("Company")]
         public int CompanyId { get; set; }
-        public CompanyEntity Company { get; set; } = new CompanyEntity();
+        public CompanyEntity Company { get; set; }
     }
 }

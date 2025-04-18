@@ -1,0 +1,64 @@
+﻿@model List<WebAutoPark.Data.Entities.VehicleEntity>
+
+@{
+    ViewData["Title"] = "Home Page";
+    int i = 1;
+}
+
+<div class="container">
+    <h1 class="text-center display-4">Автомобілі</h1>
+    <a href="@Url.Action("Create")" class="btn btn-success">Додати</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Марка</th>
+                <th scope="col">Модель</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Компанія</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(var item in Model)
+            {
+                var modalId = $"confirmDeleteModal_{item.Id}";
+                <tr>
+                    <th scope="row">@(i++)</th>
+                    <td>@item.Brand</td>
+                    <td>@item.Model</td>
+                    <td>@item.Status.Name</td>
+                    <td>@item.Company.Name</td>
+                    <td>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@modalId">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <div class="modal fade" id="@modalId" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="label_@item.Id">Підтвердження видалення</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Ви дійсно хочете видалити <strong>@item.Brand - @item.Model</strong>?
+                            </div>
+                            <div class="modal-footer">
+                                <form asp-action="Delete">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувати</button>
+                                    <button type="submit" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Видалити</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            
+        </tbody>
+    </table>
+</div>

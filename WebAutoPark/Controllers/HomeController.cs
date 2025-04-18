@@ -20,7 +20,6 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         var list = _context.Companies
-            .Where(x=> x.Name!="")
             .ToList(); 
         return View(list);
     }
