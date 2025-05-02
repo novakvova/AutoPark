@@ -10,10 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();  
 
 // Get the connection string from appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+//var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
+var connectionString = builder.Configuration.GetConnectionString("PgSqlConnection");
 
 builder.Services.AddDbContext<AppAutoParkContext>(opt =>
-    opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    opt.UseNpgsql(connectionString));
+    //opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 
