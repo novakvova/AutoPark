@@ -7,7 +7,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();  
+builder.Services.AddControllersWithViews();
 
 // Get the connection string from appsettings.json
 //var connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
@@ -15,7 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("PgSqlConnectio
 
 builder.Services.AddDbContext<AppAutoParkContext>(opt =>
     opt.UseNpgsql(connectionString));
-    //opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+//opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
 
@@ -44,7 +44,7 @@ using (var scope = app.Services.CreateScope())
     if (dbContext.Roles.Count() == 0)
     {
         string[] roles = { "Менеджер", "Механік", "Диспетчер" };
-        foreach(var name in roles)
+        foreach (var name in roles)
         {
             var role = new RoleEntity
             {
@@ -88,7 +88,7 @@ using (var scope = app.Services.CreateScope())
     }
 
 
-    if(!dbContext.Companies.Any())
+    if (!dbContext.Companies.Any())
     {
         var companies = new List<CompanyEntity>
         {
@@ -122,7 +122,7 @@ using (var scope = app.Services.CreateScope())
         dbContext.SaveChanges();
     }
 
-    
+
     if (!dbContext.Vehicles.Any())
     {
         var companies = dbContext.Companies
@@ -184,7 +184,7 @@ using (var scope = app.Services.CreateScope())
         dbContext.Vehicles.AddRange(vehicles);
         dbContext.SaveChanges();
     }
-    
+
     if (!dbContext.Drivers.Any())
     {
         var companies = dbContext.Companies.ToList();
@@ -195,44 +195,45 @@ using (var scope = app.Services.CreateScope())
             {
                 FullName = "Іваненко Сергій Миколайович",
                 LicenseNumber = "AA123456",
-                LicenseExpiryDate = DateTime.Today.AddYears(3),
+                LicenseExpiryDate = DateTime.UtcNow.Date.AddYears(3),
                 CompanyId = companies[0].Id
             },
             new ()
             {
                 FullName = "Петренко Олег Васильович",
                 LicenseNumber = "BB654321",
-                LicenseExpiryDate = DateTime.Today.AddYears(2),
+                LicenseExpiryDate = DateTime.UtcNow.Date.AddYears(2),
                 CompanyId = companies[1].Id
             },
             new ()
             {
                 FullName = "Ковальчук Марія Іванівна",
                 LicenseNumber = "CC345678",
-                LicenseExpiryDate = DateTime.Today.AddYears(4),
+                LicenseExpiryDate = DateTime.UtcNow.Date.AddYears(4),
                 CompanyId = companies[2].Id
             },
             new ()
             {
                 FullName = "Дмитрук Андрій Олексійович",
                 LicenseNumber = "DD987654",
-                LicenseExpiryDate = DateTime.Today.AddYears(1),
+                LicenseExpiryDate = DateTime.UtcNow.Date.AddYears(1),
                 CompanyId = companies[3].Id
             },
             new ()
             {
                 FullName = "Лисенко Наталія Володимирівна",
                 LicenseNumber = "EE112233",
-                LicenseExpiryDate = DateTime.Today.AddYears(5),
+                LicenseExpiryDate = DateTime.UtcNow.Date.AddYears(5),
                 CompanyId = companies[4].Id
             }
+
         };
 
         dbContext.Drivers.AddRange(drivers);
         dbContext.SaveChanges();
     }
 
-    
+
 
     if (!dbContext.Routes.Any())
     {
@@ -306,31 +307,31 @@ using (var scope = app.Services.CreateScope())
                 VehicleId = vehicles[0].Id,
                 DriverId = drivers[0].Id,
                 RouteId = routes[0].Id,
-                AssignedAt = DateTime.Today.AddDays(-5),
-                CompletedAt = DateTime.Today.AddDays(-4)
+                AssignedAt = DateTime.UtcNow.Date.AddDays(-5),
+                CompletedAt = DateTime.UtcNow.Date.AddDays(-4)
             },
             new ()
             {
                 VehicleId = vehicles[1].Id,
                 DriverId = drivers[1].Id,
                 RouteId = routes[1].Id,
-                AssignedAt = DateTime.Today.AddDays(-3),
-                CompletedAt = DateTime.Today.AddDays(-2)
+                AssignedAt = DateTime.UtcNow.Date.AddDays(-3),
+                CompletedAt = DateTime.UtcNow.Date.AddDays(-2)
             },
             new ()
             {
                 VehicleId = vehicles[2].Id,
                 DriverId = drivers[2].Id,
                 RouteId = routes[2].Id,
-                AssignedAt = DateTime.Today.AddDays(-2),
-                CompletedAt = DateTime.Today.AddDays(-1)
+                AssignedAt = DateTime.UtcNow.Date.AddDays(-2),
+                CompletedAt = DateTime.UtcNow.Date.AddDays(-1)
             },
             new ()
             {
                 VehicleId = vehicles[3].Id,
                 DriverId = drivers[3].Id,
                 RouteId = routes[3].Id,
-                AssignedAt = DateTime.Today.AddDays(-1),
+                AssignedAt = DateTime.UtcNow.Date.AddDays(-1),
                 CompletedAt = null // ще не завершено
             },
             new ()
@@ -338,9 +339,10 @@ using (var scope = app.Services.CreateScope())
                 VehicleId = vehicles[4].Id,
                 DriverId = drivers[4].Id,
                 RouteId = routes[4].Id,
-                AssignedAt = DateTime.Today,
+                AssignedAt = DateTime.UtcNow.Date,
                 CompletedAt = null // активне призначення
             }
+
         };
 
         dbContext.Assignments.AddRange(assignments);
@@ -357,43 +359,44 @@ using (var scope = app.Services.CreateScope())
             {
                 VehicleId = vehicles[0].Id,
                 Description = "Планова заміна мастила та фільтрів",
-                Date = DateTime.Today.AddDays(-90),
+                Date = DateTime.UtcNow.Date.AddDays(-90),
                 Cost = 2500
             },
             new ()
             {
                 VehicleId = vehicles[1].Id,
                 Description = "Заміна гальмівних колодок",
-                Date = DateTime.Today.AddDays(-60),
+                Date = DateTime.UtcNow.Date.AddDays(-60),
                 Cost = 1800
             },
             new ()
             {
                 VehicleId = vehicles[2].Id,
                 Description = "Діагностика електросистеми",
-                Date = DateTime.Today.AddDays(-30),
+                Date = DateTime.UtcNow.Date.AddDays(-30),
                 Cost = 900
             },
             new ()
             {
                 VehicleId = vehicles[3].Id,
                 Description = "Ремонт ходової частини",
-                Date = DateTime.Today.AddDays(-15),
+                Date = DateTime.UtcNow.Date.AddDays(-15),
                 Cost = 3400
             },
             new ()
             {
                 VehicleId = vehicles[4].Id,
                 Description = "ТО перед рейсом",
-                Date = DateTime.Today.AddDays(-5),
+                Date = DateTime.UtcNow.Date.AddDays(-5),
                 Cost = 1200
             }
+
         };
 
         dbContext.Maintenances.AddRange(maintenances);
         dbContext.SaveChanges();
     }
-    
+
 
 }
 
