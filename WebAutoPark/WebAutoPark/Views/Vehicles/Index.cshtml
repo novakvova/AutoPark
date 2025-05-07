@@ -1,4 +1,4 @@
-﻿@model List<WebAutoPark.Data.Entities.VehicleEntity>
+﻿@model List<VehicleItemVM>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -28,8 +28,8 @@
                     <th scope="row">@(i++)</th>
                     <td>@item.Brand</td>
                     <td>@item.Model</td>
-                    <td>@item.Status.Name</td>
-                    <td>@item.Company.Name</td>
+                    <td>@item.StatusName</td>
+                    <td>@item.CompanyName</td>
                     <td>
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@modalId">
                             <i class="fas fa-trash-alt"></i>

@@ -1,26 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAutoPark.Data;
 using WebAutoPark.Data.Entities;
+using WebAutoPark.Models.Vehicle;
+using WebAutoPark.Models.VehicleStatus;
 
 namespace WebAutoPark.Controllers;
 
 public class VehiclesController : Controller
 {
     private readonly AppAutoParkContext _context;
+    private readonly IMapper _mapper;
 
-    public VehiclesController(AppAutoParkContext context)
+    public VehiclesController(AppAutoParkContext context, IMapper mapper)
     {
         _context = context;
+        _mapper = mapper;
     }
 
     public IActionResult Index()
     {
-        var list = _context.Vehicles
-            .Include(x => x.Company)
-            .Include(x => x.Status)
-            .ToList(); 
-        return View(list);
+        var model = _mapper.ProjectTo<VehicleItemVM>(_context.Vehicles).ToList();
+        return View(model);
     }
 
     [HttpGet]
