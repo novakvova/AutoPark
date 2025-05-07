@@ -2,16 +2,15 @@
 using WebAutoPark.Data.Entities;
 using WebAutoPark.Models.Company;
 
-namespace WebAutoPark.Mapper
+namespace WebAutoPark.Mapper;
+
+public class CompanyMapper : Profile
 {
-    public class CompanyMapper : Profile
+    public CompanyMapper()
     {
-        public CompanyMapper()
-        {
-            CreateMap<CompanyEntity, CompanyItemVM>();
-            CreateMap<CompanyCreateVM, CompanyEntity>();
-            CreateMap<CompanyEditVM, CompanyEntity>()
-                .ReverseMap();
-        }
+        CreateMap<CompanyEntity, CompanyItemVM>();
+        CreateMap<CompanyCreateVM, CompanyEntity>();
+        CreateMap<CompanyEditVM, CompanyEntity>()
+            .ReverseMap();
     }
 }

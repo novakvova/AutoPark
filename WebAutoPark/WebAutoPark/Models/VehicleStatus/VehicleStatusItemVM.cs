@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAutoPark.Models.Company
+namespace WebAutoPark.Models.VehicleStatus
 {
-    public class CompanyItemVM
+    public class VehicleStatusItemVM
     {
         public int Id { get; set; }
 
-        [Display(Name = "Назва компанії")]
+        [Display(Name = "Статус автомобіля")]
         public string Name { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,4 @@
-﻿@model List<WebAutoPark.Data.Entities.VehicleStatusEntity>
+﻿@model List<VehicleStatusItemVM>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -25,6 +25,9 @@
                     <th scope="row">@(i++)</th>
                     <td>@item.Name</td>
                     <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" asp class="btn btn-success">
+                            <i class="fas fa-pencil"></i>
+                        </a>
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@modalId">
                             <i class="fas fa-trash-alt"></i>
                         </button>

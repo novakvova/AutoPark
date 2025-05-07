@@ -6,6 +6,6 @@ namespace WebAutoPark.Models.Company
     {
         [Display(Name = "Назва компанії")]
         [Required(ErrorMessage ="Вкажіть назву")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }
