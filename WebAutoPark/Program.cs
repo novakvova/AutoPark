@@ -15,6 +15,9 @@ var connectionString = builder.Configuration.GetConnectionString("PgSqlConnectio
 
 builder.Services.AddDbContext<AppAutoParkContext>(opt =>
     opt.UseNpgsql(connectionString));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 //opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 var app = builder.Build();
