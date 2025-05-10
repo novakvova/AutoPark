@@ -1,8 +1,11 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAutoPark.Data;
 using WebAutoPark.Data.Entities;
+using WebAutoPark.Helpers;
+using WebAutoPark.Models.Company;
 using WebAutoPark.Models.Vehicle;
 using WebAutoPark.Models.VehicleStatus;
 
@@ -28,15 +31,34 @@ public class VehiclesController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        return View();
+        VehicleCreateVM model = new VehicleCreateVM();
+        model.Companies = _mapper.ProjectTo<SelectItemViewModel>(_context.Companies)
+            .ToList();
+
+        model.VehicleStatuses = _mapper.ProjectTo<SelectItemViewModel>(_context.VehicleStatuses)
+            .ToList();
+
+        return View(model);
     }
 
     [HttpPost] 
-    public async Task<IActionResult> Create(VehicleEntity model)
+    public async Task<IActionResult> Create(VehicleCreateVM requestModel)
     {
-        await _context.AddAsync(model);
+        if (!ModelState.IsValid)
+        {
+            requestModel.Companies = _mapper.ProjectTo<SelectItemViewModel>(_context.Companies)
+            .ToList();
+
+            requestModel.VehicleStatuses = _mapper.ProjectTo<SelectItemViewModel>(_context.VehicleStatuses)
+                .ToList();
+
+            return View(requestModel);
+        }
+        var entity = _mapper.Map<VehicleEntity>(requestModel);
+        await _context.Vehicles.AddAsync(entity);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
+
     }
 
     [HttpPost]

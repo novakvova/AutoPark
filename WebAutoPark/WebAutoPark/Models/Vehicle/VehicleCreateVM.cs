@@ -1,30 +1,35 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using WebAutoPark.Data.Entities;
+using WebAutoPark.Helpers;
 
-namespace WebAutoPark.Models.Vehicle
+namespace WebAutoPark.Models.Vehicle;
+
+public class VehicleCreateVM
 {
-    public class VehicleCreateVM
-    {
-        [Display(Name = "Назва автомобіля")]
-        [Required(ErrorMessage ="Вкажіть назву")]
-        public string Name { get; set; } = string.Empty;
 
-        public int Id { get; set; }
-        [Required, StringLength(255)]
-        public string RegistrationNumber { get; set; } = string.Empty;
-        [Required, StringLength(255)]
-        public string Brand { get; set; } = string.Empty;
-        [Required, StringLength(255)]
-        public string Model { get; set; } = string.Empty;
-        public int Year { get; set; }
+    [Display(Name = "Реєстраційний номер автомобіля")]
+    [Required(ErrorMessage = "Вкажіть реєстраційний номер")]
+    public string RegistrationNumber { get; set; } = string.Empty;
+    [Display(Name = "Марка")]
+    [Required(ErrorMessage = "Вкажіть марку")]
+    public string Brand { get; set; } = string.Empty;
+    [Display(Name = "Модель")]
+    [Required(ErrorMessage = "Вкажіть модель")]
+    public string Model { get; set; } = string.Empty;
+    [Display(Name = "Рік випуску")]
+    [Required(ErrorMessage = "Вкажіть рік випуску")]
+    public int Year { get; set; }
 
-        [ForeignKey("Status")]
-        public int StatusId { get; set; }
-        public VehicleStatusEntity? Status { get; set; }
+    [Display(Name = "Статус")]
+    [Required(ErrorMessage = "Вкажіть статус")]
+    public int StatusId { get; set; }
 
-        [ForeignKey("Company")]
-        public int CompanyId { get; set; }
-        public CompanyEntity? Company { get; set; }
-    }
+    [Display(Name = "Статус")]
+    public List<SelectItemViewModel>? VehicleStatuses { get; set; }
+
+    [Display(Name = "Компанія")]
+    [Required(ErrorMessage = "Вкажіть компанію")]
+    public int CompanyId { get; set; }
+
+    [Display(Name = "Компанія")]
+    public List<SelectItemViewModel>? Companies { get; set; }
 }

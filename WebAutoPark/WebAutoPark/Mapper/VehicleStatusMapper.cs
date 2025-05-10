@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WebAutoPark.Data.Entities;
+using WebAutoPark.Helpers;
 using WebAutoPark.Models.VehicleStatus;
 
 namespace WebAutoPark.Mapper;
@@ -12,5 +13,7 @@ public class VehicleStatusMapper : Profile
         CreateMap<VehicleStatusCreateVM, VehicleStatusEntity>();
         CreateMap<VehicleStatusEditVM, VehicleStatusEntity>()
             .ReverseMap();
+
+        CreateMap<VehicleStatusEntity, SelectItemViewModel>();
     }
 }
