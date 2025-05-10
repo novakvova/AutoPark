@@ -47,7 +47,7 @@ public class VehiclesController : Controller
         if (!ModelState.IsValid)
         {
             requestModel.Companies = _mapper.ProjectTo<SelectItemViewModel>(_context.Companies)
-            .ToList();
+                .ToList();
 
             requestModel.VehicleStatuses = _mapper.ProjectTo<SelectItemViewModel>(_context.VehicleStatuses)
                 .ToList();
@@ -59,6 +59,53 @@ public class VehiclesController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
 
+    }
+
+    [HttpGet] //Тепер він працює методом GET - це щоб побачити форму
+    public async Task<IActionResult> Edit(int id)
+    {
+        var entity = await _context.Vehicles.FindAsync(id);
+        if (entity == null)
+        {
+            return NotFound();
+        }
+
+        var model = _mapper.Map<VehicleEditVM>(entity);
+
+        model.Companies = _mapper.ProjectTo<SelectItemViewModel>(_context.Companies)
+            .ToList();
+
+        model.VehicleStatuses = _mapper.ProjectTo<SelectItemViewModel>(_context.VehicleStatuses)
+            .ToList();
+
+        return View(model);
+    }
+
+    [HttpPost] //Тепер він працює методом GET - це щоб побачити форму
+    public async Task<IActionResult> Edit(VehicleEditVM requestModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            requestModel.Companies = _mapper.ProjectTo<SelectItemViewModel>(_context.Companies)
+                .ToList();
+
+            requestModel.VehicleStatuses = _mapper.ProjectTo<SelectItemViewModel>(_context.VehicleStatuses)
+                .ToList();
+            return View(requestModel);
+        }
+
+        var existing = await _context.Vehicles.FirstOrDefaultAsync(x => x.Id == requestModel.Id);
+        if (existing == null)
+        {
+            return NotFound();
+        }
+
+
+        existing = _mapper.Map(requestModel, existing);
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]

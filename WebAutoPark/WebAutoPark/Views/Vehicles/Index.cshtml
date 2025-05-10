@@ -31,6 +31,9 @@
                     <td>@item.StatusName</td>
                     <td>@item.CompanyName</td>
                     <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" asp class="btn btn-success">
+                            <i class="fas fa-pencil"></i>
+                        </a>
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#@modalId">
                             <i class="fas fa-trash-alt"></i>
                         </button>
